@@ -1,6 +1,6 @@
 
 const yargs=require('yargs')
-
+const notes = require('./notes.js')
 // process.argv return the array containing the command line arguments 
 // passes when the node.js was processed.
 // console.log(process.argv)
@@ -13,15 +13,6 @@ const yargs=require('yargs')
 yargs.command({
     command:'add',
     describe:'Add a new note',
-    handler:function(){
-        console.log('Adding a new note')
-    }
-})
-
-// // create a remove command
-yargs.command({
-    command:'remove',
-    describe:'Remove a note',
     builder:{
         title:{
             describe:'Note title',
@@ -35,9 +26,24 @@ yargs.command({
         }
     },
     handler:function(argv){
+        notes.addnote(argv.title,argv.body)
+    }
+})
+
+// // create a remove command
+yargs.command({
+    command:'remove',
+    describe:'Remove a note',
+    builder:{
+        title:{
+            describe:'Note title',
+            demandOption:true,
+            type:'string'
+        },
+    },
+    handler:function(argv){
         // console.log('removing a note',argv)
-        console.log('Title:'+argv.title)
-        console.log('body:'+argv.body)
+        notes.removenote(argv.title)
     }
 })
 
